@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Crie sua conta na Alivie e comece sua jornada de bem-estar com rotinas personalizadas." />
+    <meta property="og:title" content="Cadastro — Alivie">
+    <meta property="og:description" content="Crie sua conta na Alivie e comece sua jornada de bem-estar com rotinas personalizadas.">
+    <meta property="og:image" content="https://seu-site.com/caminho-da-foto.png">
+    <meta property="og:url" content="https://souzamurilo24-bit.github.io/Alivie/signup.html">
+    <meta property="og:type" content="website">
+    <title>Cadastro — Alivie</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <body class="page-auth">
+    <!-- Simple Header -->
+    <header class="simple-header">
+      <a class="logo" href="./index.html">Alivie</a>
+      <nav class="simple-nav" id="nav-auth"></nav>
+    </header>
+
+    <main class="auth-main">
+      <div class="auth-card auth-card--wide">
+        <h1 class="auth-title">Criar conta</h1>
+        <p class="auth-sub">Cadastre-se com e-mail e senha.</p>
+
+        <form id="signup-form" class="auth-form" novalidate>
+          <div class="field">
+            <label for="email">E-mail</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="email"
+              inputmode="email"
+            />
+          </div>
+          <div class="field">
+            <label for="password">Senha</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              minlength="6"
+              autocomplete="new-password"
+            />
+          </div>
+          <div class="field">
+            <label for="confirm">Confirmar senha</label>
+            <input
+              type="password"
+              id="confirm"
+              name="confirm"
+              required
+              minlength="6"
+              autocomplete="new-password"
+            />
+          </div>
+          <p id="signup-error" class="form-error" role="alert" hidden></p>
+          <button type="submit" class="btn btn-primary btn-block">
+            Cadastrar
+          </button>
+        </form>
+
+        <p class="auth-switch">
+          Já tem conta? <a href="./login.html">Entrar</a>
+        </p>
+      </div>
+    </main>
+
+    <footer class="simple-footer">
+      <p>Alivie — Momentos de calma</p>
+    </footer>
+
+    <script type="module" src="./firebase.js"></script>
+    <script type="module" src="./auth.js"></script>
+    <script type="module" src="./app.js"></script>
+    <script src="https://app.wonderchat.io/scripts/wonderchat-seo.js" data-name="wonderchat-seo" data-address="app.wonderchat.io" data-id="cmok34csi053bbxsz9kmv60xv" data-widget-size="normal" data-widget-button-size="normal" defer></script>
+  </body>
+</html>

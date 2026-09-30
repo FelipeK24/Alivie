@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Suas tarefas diárias de bem-estar — Alivie" />
+    <title>Suas Tarefas — Alivie</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <body class="page-tasks">
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="./minha-rotina.html">Alivie</a>
+        <nav class="nav" aria-label="Principal">
+          <ul class="nav-links">
+            <li><a href="./minha-rotina.html" aria-current="page">Tarefas</a></li>
+            <li><a href="./jardim.html">Meu Jardim</a></li>
+            <li><a href="./pratica.html">Praticar</a></li>
+          </ul>
+          <div class="nav-auth" id="nav-auth"></div>
+        </nav>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+      <div class="mobile-menu-header">
+        <h2>Menu</h2>
+        <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Fechar menu">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="mobile-menu-content">
+        <div class="mobile-menu-section">
+          <h3>Navegação</h3>
+          <ul class="mobile-menu-links">
+            <li><a href="./minha-rotina.html">Tarefas</a></li>
+            <li><a href="./jardim.html">Meu Jardim</a></li>
+            <li><a href="./pratica.html">Praticar</a></li>
+          </ul>
+        </div>
+        <div class="mobile-menu-section" id="mobile-auth-section">
+          <h3>Conta</h3>
+          <div id="mobile-nav-auth"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Onboarding Modal -->
+    <div class="modal" id="onboarding-modal" style="display: none;">
+      <div class="modal-content" style="max-width: 500px; text-align: center;">
+        <button class="modal-close" id="close-onboarding" aria-label="Fechar">
+          <i class="fas fa-times"></i>
+        </button>
+        
+        <div style="font-size: 3rem; margin-bottom: 1rem;">🌱</div>
+        
+        <h1 style="margin-bottom: 1rem;">Bem-vindo ao Alivie!</h1>
+        
+        <p style="font-size: 1.0625rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.5;">
+          Aqui você encontrará sugestões de práticas por período do dia. Complete cada uma para fazer seu jardim crescer e manter seu streak!
+        </p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; text-align: left;">
+          <div style="background: color-mix(in srgb, var(--accent) 10%, var(--surface)); padding: 1rem; border-radius: 12px;">
+            <i class="fas fa-fire" style="color: #ff6b6b; font-size: 1.5rem;"></i>
+            <strong style="display: block; margin-top: 0.5rem;">Streaks</strong>
+            <small>Mantenha sua sequência</small>
+          </div>
+          <div style="background: color-mix(in srgb, var(--accent) 10%, var(--surface)); padding: 1rem; border-radius: 12px;">
+            <i class="fas fa-leaf" style="color: #51cf66; font-size: 1.5rem;"></i>
+            <strong style="display: block; margin-top: 0.5rem;">Jardim</strong>
+            <small>Veja ele crescer</small>
+          </div>
+        </div>
+        
+        <button class="btn btn-primary" id="close-onboarding-btn" style="width: 100%;">
+          Vamos começar!
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="tasks-main">
+      <div class="container">
+        <!-- Welcome & Streak Summary -->
+        <section class="tasks-header">
+          <div class="welcome-card">
+            <h1 id="welcome-name">Olá!</h1>
+            <p id="welcome-subtitle">Suas sugestões de hoje</p>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="quick-stats">
+            <div class="stat-card">
+              <i class="fas fa-fire"></i>
+              <div class="stat-info">
+                <div class="stat-label">Sequência</div>
+                <div class="stat-value" id="streak-count">0</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-check-circle"></i>
+              <div class="stat-info">
+                <div class="stat-label">Hoje</div>
+                <div class="stat-value" id="today-count">0/3</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-spa"></i>
+              <div class="stat-info">
+                <div class="stat-label">Jardim</div>
+                <div class="stat-value" id="garden-count">0</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tasks by Period -->
+        <section class="tasks-by-period">
+          <!-- Morning -->
+          <article class="period-section" id="morning-section">
+            <div class="period-header">
+              <span class="period-icon">🌅</span>
+              <h2>Manhã</h2>
+              <span class="period-progress" id="morning-progress">0/3</span>
+            </div>
+            <div class="tasks-grid" id="morning-tasks"></div>
+          </article>
+
+          <!-- Afternoon -->
+          <article class="period-section" id="afternoon-section">
+            <div class="period-header">
+              <span class="period-icon">☀️</span>
+              <h2>Tarde</h2>
+              <span class="period-progress" id="afternoon-progress">0/3</span>
+            </div>
+            <div class="tasks-grid" id="afternoon-tasks"></div>
+          </article>
+
+          <!-- Evening -->
+          <article class="period-section" id="evening-section">
+            <div class="period-header">
+              <span class="period-icon">🌙</span>
+              <h2>Noite</h2>
+              <span class="period-progress" id="evening-progress">0/3</span>
+            </div>
+            <div class="tasks-grid" id="evening-tasks"></div>
+          </article>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="tasks-cta">
+          <div class="cta-card">
+            <h2>Pronto para praticar?</h2>
+            <p>Escolha uma sugestão acima ou explore práticas personalizadas</p>
+            <a href="./pratica.html" class="btn btn-primary">
+              <i class="fas fa-play"></i> Comece agora
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; 2026 Alivie — Momentos de bem-estar</p>
+      </div>
+    </footer>
+
+    <script type="module" src="./firebase.js"></script>
+    <script type="module" src="./auth.js"></script>
+    <script type="module" src="./minha-rotina.js"></script>
+    <script src="https://app.wonderchat.io/scripts/wonderchat-seo.js" data-name="wonderchat-seo" data-address="app.wonderchat.io" data-id="cmok34csi053bbxsz9kmv60xv" data-widget-size="normal" data-widget-button-size="normal" defer></script>
+  </body>
+</html>

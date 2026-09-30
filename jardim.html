@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Seu jardim de momentos de calma" />
+    <title>Meu Jardim — Alivie</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <body class="garden-page">
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="./index.html">Alivie</a>
+        <nav class="nav" aria-label="Principal">
+          <ul class="nav-links">
+            <li><a href="./minha-rotina.html">Tarefas</a></li>
+            <li><a href="./jardim.html" aria-current="page">Meu Jardim</a></li>
+            <li><a href="./pratica.html">Praticar</a></li>
+          </ul>
+          <div class="nav-auth" id="nav-auth"></div>
+        </nav>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+      <div class="mobile-menu-header">
+        <h2>Menu</h2>
+        <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Fechar menu">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="mobile-menu-content">
+        <div class="mobile-menu-section">
+          <h3>Navegação</h3>
+          <ul class="mobile-menu-links">
+            <li><a href="./minha-rotina.html">Tarefas</a></li>
+            <li><a href="./jardim.html">Meu Jardim</a></li>
+            <li><a href="./pratica.html">Praticar</a></li>
+          </ul>
+        </div>
+        <div class="mobile-menu-section" id="mobile-auth-section">
+          <h3>Conta</h3>
+          <div id="mobile-nav-auth"></div>
+        </div>
+      </div>
+    </div>
+
+    <main class="garden-main">
+      <!-- Streak Banner -->
+      <div class="streak-banner" id="streak-banner" role="status" aria-label="Seu progresso atual">
+        <span class="streak-icon" aria-hidden="true">🔥</span>
+        <span class="streak-text">
+          <strong id="streak-count">0</strong> dias seguidos
+        </span>
+        <span class="streak-longest" id="streak-longest">Recorde: 0</span>
+      </div>
+
+      <!-- Garden Scene -->
+      <section class="garden-scene-container" aria-label="Seu jardim de bem-estar">
+        <h1 class="garden-title">Seu espaço de calma</h1>
+        
+        <div class="garden-display" id="garden-display" role="region" aria-label="Visualização do seu jardim">
+          <!-- Populated by garden.js -->
+          <div class="garden-sandbox" id="garden-sandbox">
+            <p class="garden-empty">Seu jardim está começando...</p>
+            <p class="garden-hint">Complete uma prática para adicionar seu primeiro elemento</p>
+          </div>
+        </div>
+
+        <!-- Garden Stats -->
+        <div class="garden-stats" id="garden-stats" role="region" aria-label="Estatísticas do seu jardim">
+          <div class="stat">
+            <span class="stat-icon" aria-hidden="true">🪨</span>
+            <span class="stat-value" id="stat-stones">0</span>
+            <span class="stat-label">pedras</span>
+          </div>
+          <div class="stat">
+            <span class="stat-icon" aria-hidden="true">🌸</span>
+            <span class="stat-value" id="stat-flowers">0</span>
+            <span class="stat-label">flores</span>
+          </div>
+          <div class="stat">
+            <span class="stat-icon" aria-hidden="true">🌳</span>
+            <span class="stat-value" id="stat-trees">0</span>
+            <span class="stat-label">árvores</span>
+          </div>
+          <div class="stat">
+            <span class="stat-icon" aria-hidden="true">🏮</span>
+            <span class="stat-value" id="stat-lanterns">0</span>
+            <span class="stat-label">lanternas</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Calendar -->
+      <section class="calendar-section" aria-label="Seu calendário de práticas">
+        <h2>Seus momentos</h2>
+        <div class="streak-calendar" id="streak-calendar">
+          <!-- Populated by JS -->
+        </div>
+        <p class="calendar-legend">
+          <span class="legend-item"><span class="legend-dot calm" aria-hidden="true"></span> Calmo</span>
+          <span class="legend-item"><span class="legend-dot rest" aria-hidden="true"></span> Descansado</span>
+          <span class="legend-item"><span class="legend-dot energy" aria-hidden="true"></span> Energizado</span>
+          <span class="legend-item"><span class="legend-dot focus" aria-hidden="true"></span> Centrado</span>
+        </p>
+      </section>
+
+      <!-- History -->
+      <section class="history-section" aria-label="Histórico de suas práticas">
+        <h2>Histórico recente</h2>
+        <!-- CORREÇÃO: Alterado de <ul> para <div> para aceitar as divs geradas pelo JS -->
+        <div class="history-list" id="history-list">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <div class="garden-cta">
+        <a href="./pratica.html" class="btn btn-primary btn-large">
+          <i class="fas fa-play"></i>
+          Novo momento
+        </a>
+      </div>
+    </main>
+
+    <script type="module" src="./firebase.js"></script>
+    <script type="module" src="./auth.js"></script>
+    <script type="module" src="./garden.js"></script>
+    <script src="https://app.wonderchat.io/scripts/wonderchat-seo.js" data-name="wonderchat-seo" data-address="app.wonderchat.io" data-id="cmok34csi053bbxsz9kmv60xv" data-widget-size="normal" data-widget-button-size="normal" defer></script>
+  </body>
+</html>

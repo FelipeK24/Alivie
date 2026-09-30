@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Escolha seu momento de calma na Alivie" />
+    <title>Momento — Alivie</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <body class="practice-page">
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="./index.html">Alivie</a>
+        <nav class="nav" aria-label="Principal">
+          <ul class="nav-links">
+            <li><a href="./minha-rotina.html">Tarefas</a></li>
+            <li><a href="./jardim.html">Meu Jardim</a></li>
+            <li><a href="./pratica.html" aria-current="page">Praticar</a></li>
+          </ul>
+          <div class="nav-auth" id="nav-auth"></div>
+        </nav>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+      <div class="mobile-menu-header">
+        <h2>Menu</h2>
+        <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Fechar menu">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="mobile-menu-content">
+        <div class="mobile-menu-section">
+          <h3>Navegação</h3>
+          <ul class="mobile-menu-links">
+            <li><a href="./minha-rotina.html">Tarefas</a></li>
+            <li><a href="./jardim.html">Meu Jardim</a></li>
+            <li><a href="./pratica.html">Praticar</a></li>
+          </ul>
+        </div>
+        <div class="mobile-menu-section" id="mobile-auth-section">
+          <h3>Conta</h3>
+          <div id="mobile-nav-auth"></div>
+        </div>
+      </div>
+    </div>
+
+    <main class="practice-main">
+      <!-- Vibe Picker -->
+      <section class="vibe-picker" id="vibe-picker">
+        <h1 class="vibe-title">Como você quer se sentir?</h1>
+        <p class="vibe-subtitle">Não tem certo ou errado. Apenas escolha.</p>
+        
+        <div class="vibe-grid" role="group" aria-label="Escolha como você quer se sentir">
+          <button class="vibe-btn vibe-calm" data-vibe="calm" aria-label="Se sentir calmo - Reduzir ansiedade">
+            <span class="vibe-icon" aria-hidden="true">🌊</span>
+            <span class="vibe-label">Calmo</span>
+            <span class="vibe-desc">Reduzir ansiedade</span>
+          </button>
+          
+          <button class="vibe-btn vibe-rest" data-vibe="rest" aria-label="Se sentir descansado - Preparar para sono">
+            <span class="vibe-icon" aria-hidden="true">💤</span>
+            <span class="vibe-label">Descansado</span>
+            <span class="vibe-desc">Preparar para sono</span>
+          </button>
+          
+          <button class="vibe-btn vibe-energy" data-vibe="energy" aria-label="Se sentir energizado - Despertar vitalidade">
+            <span class="vibe-icon" aria-hidden="true">⚡</span>
+            <span class="vibe-label">Energizado</span>
+            <span class="vibe-desc">Despertar vitalidade</span>
+          </button>
+          
+          <button class="vibe-btn vibe-focus" data-vibe="focus" aria-label="Se sentir centrado - Focar a mente">
+            <span class="vibe-icon" aria-hidden="true">🎯</span>
+            <span class="vibe-label">Centrado</span>
+            <span class="vibe-desc">Focar a mente</span>
+          </button>
+        </div>
+
+        <button class="btn btn-ghost vibe-surprise" id="btn-surprise">
+          <i class="fas fa-magic"></i>
+          Surpreenda-me
+        </button>
+      </section>
+
+      <!-- Practice Selection (hidden initially) -->
+      <section class="practice-selection" id="practice-selection" hidden>
+        <button class="btn-back" id="btn-back-vibe" aria-label="Voltar às opções de bem-estar">
+          <i class="fas fa-arrow-left" aria-hidden="true"></i>
+          Voltar
+        </button>
+        
+        <h2 id="practice-vibe-title">Práticas para se sentir calmo</h2>
+        
+        <div class="practice-list" id="practice-list">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Player (hidden initially) -->
+      <section class="practice-player" id="practice-player" hidden>
+        <button class="btn-back" id="btn-back-practice" aria-label="Voltar à seleção de práticas">
+          <i class="fas fa-arrow-left" aria-hidden="true"></i>
+          Voltar
+        </button>
+
+        <div class="player-container">
+          <!-- Timer Circle -->
+          <div class="timer-container" role="region" aria-label="Cronômetro">
+            <svg class="timer-svg" viewBox="0 0 100 100" aria-hidden="true">
+              <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
+              <circle class="timer-progress" cx="50" cy="50" r="45" id="timer-circle"></circle>
+            </svg>
+            <div class="timer-text">
+              <span id="timer-display" aria-label="Tempo restante">3:00</span>
+              <span class="timer-label" id="timer-step" aria-live="polite">Prepare-se...</span>
+            </div>
+          </div>
+
+          <!-- Current Step Card -->
+          <div class="step-card" id="step-card" role="region" aria-label="Instruções da prática">
+            <p id="step-text" aria-live="polite">Sente-se confortavelmente...</p>
+          </div>
+
+          <!-- Controls -->
+          <div class="player-controls" role="group" aria-label="Controles de reprodução">
+            <button class="btn-control" id="btn-pause" aria-label="Pausar prática" title="Pausar">
+              <i class="fas fa-pause" aria-hidden="true"></i>
+            </button>
+            <button class="btn-control btn-stop" id="btn-stop" aria-label="Parar prática" title="Parar">
+              <i class="fas fa-stop" aria-hidden="true"></i>
+            </button>
+            <button class="btn-control" id="btn-sound" aria-label="Som ambiente" title="Som ambiente">
+              <i class="fas fa-volume-up" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <!-- Progress Dots -->
+          <div class="step-dots" id="step-dots"></div>
+        </div>
+      </section>
+
+      <!-- Check-in (hidden initially) -->
+      <section class="practice-checkin" id="practice-checkin" hidden>
+        <h2>Como você se sente agora?</h2>
+        
+        <div class="mood-slider" id="mood-slider" role="group" aria-label="Como você se sente agora?">
+          <button class="mood-btn" data-mood="terrible" aria-label="Muito mal" title="Muito mal">😢</button>
+          <button class="mood-btn" data-mood="bad" aria-label="Mal" title="Mal">😕</button>
+          <button class="mood-btn" data-mood="okay" aria-label="Mais ou menos" title="Mais ou menos">😐</button>
+          <button class="mood-btn" data-mood="good" aria-label="Bem" title="Bem">🙂</button>
+          <button class="mood-btn" data-mood="great" aria-label="Ótimo" title="Ótimo">😄</button>
+        </div>
+
+        <div class="note-input">
+          <input type="text" id="practice-note" placeholder="Uma palavra sobre este momento (opcional)" maxlength="50">
+        </div>
+
+        <button class="btn btn-primary btn-large" id="btn-complete">
+          Finalizar momento
+        </button>
+      </section>
+    </main>
+
+    <script type="module" src="./firebase.js"></script>
+    <script type="module" src="./auth.js"></script>
+    <script type="module" src="./practices.js"></script>
+    <script type="module" src="./practice-player.js"></script>
+    <script src="https://app.wonderchat.io/scripts/wonderchat-seo.js" data-name="wonderchat-seo" data-address="app.wonderchat.io" data-id="cmok34csi053bbxsz9kmv60xv" data-widget-size="normal" data-widget-button-size="normal" defer></script>
+  </body>
+</html>

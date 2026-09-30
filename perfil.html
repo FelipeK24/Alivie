@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Configure seu perfil na Alivie e personalize sua experiência de bem-estar." />
+    <meta property="og:title" content="Perfil — Alivie">
+    <meta property="og:description" content="Configure seu perfil na Alivie e personalize sua experiência de bem-estar.">
+    <meta property="og:image" content="https://seu-site.com/caminho-da-foto.png">
+    <meta property="og:url" content="https://souzamurilo24-bit.github.io/Alivie/perfil.html">
+    <meta property="og:type" content="website">
+    <title>Perfil do Usuário - Alivie</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="page-perfil">
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="./index.html">Alivie</a>
+        <nav class="nav" aria-label="Principal">
+          <ul class="nav-links">
+            <li><a href="./minha-rotina.html">Tarefas</a></li>
+            <li><a href="./jardim.html">Meu Jardim</a></li>
+            <li><a href="./pratica.html">Nova Prática</a></li>
+            <li><a href="./perfil.html" aria-current="page">Perfil</a></li>
+          </ul>
+          <div class="nav-auth" id="nav-auth"></div>
+        </nav>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+      <div class="mobile-menu-header">
+        <h2>Menu</h2>
+        <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Fechar menu">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="mobile-menu-content">
+        <div class="mobile-menu-section">
+          <h3>Navegação</h3>
+          <ul class="mobile-menu-links">
+            <li><a href="./index.html">Início</a></li>
+            <li><a href="./jardim.html">Meu Jardim</a></li>
+            <li><a href="./pratica.html">Nova Prática</a></li>
+            <li><a href="./perfil.html">Perfil</a></li>
+          </ul>
+        </div>
+        <div class="mobile-menu-section" id="mobile-auth-section">
+          <h3>Conta</h3>
+          <div id="mobile-nav-auth"></div>
+        </div>
+      </div>
+    </div>
+
+    <main class="profile-main">
+        <div class="container">
+            <article class="profile-card">
+                <section class="avatar-section">
+                    <div class="avatar-circle">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h1 id="profile-name">Olá!</h1>
+                </section>
+
+                <section class="profile-form">
+                    <div class="form-section">
+                        <h2>Configuração do perfil</h2>
+                        <div class="form-group">
+                            <label for="display-name">Seu nome</label>
+                            <input type="text" id="display-name" placeholder="Como quer ser chamado?" maxlength="20">
+                        </div>
+                        <div class="form-group">
+                            <label>Tema</label>
+                            <div class="theme-toggle">
+                                <span class="theme-label">Claro</span>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="theme-toggle">
+                                    <span class="toggle-slider"></span>
+                                </div>
+                                <span class="theme-label">Escuro</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button id="btn-save" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Salvar
+                        </button>
+                        <button id="btn-logout" class="btn btn-ghost btn-logout">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </button>
+                    </div>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Alivie — Momentos de bem-estar</p>
+        </div>
+    </footer>
+    
+    <script type="module" src="./firebase.js"></script>
+    <script type="module" src="./auth.js"></script>
+    <script type="module" src="./perfil.js"></script>
+    <script src="https://app.wonderchat.io/scripts/wonderchat-seo.js" data-name="wonderchat-seo" data-address="app.wonderchat.io" data-id="cmok34csi053bbxsz9kmv60xv" data-widget-size="normal" data-widget-button-size="normal" defer></script>
+</body>
+</html>
