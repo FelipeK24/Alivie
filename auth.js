@@ -122,16 +122,9 @@ function renderHeader(container) {
     span.className = "nav-user-email";
     span.textContent = displayName;
     span.setAttribute("title", "Logado como " + displayName);
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "btn btn-ghost";
-    btn.textContent = "Sair";
-    btn.addEventListener("click", async () => {
-      await logout();
-      window.location.reload();
-    });
+    const profileLink = createProfileLink(container, "btn btn-ghost btn-small");
     wrap.appendChild(span);
-    wrap.appendChild(btn);
+    if (profileLink) wrap.appendChild(profileLink);
     container.appendChild(wrap);
   } else {
     const guestWrap = document.createElement("div");
@@ -150,6 +143,18 @@ function renderHeader(container) {
   }
 }
 
+function createProfileLink(container, className = "btn btn-ghost") {
+  const scope = container.closest("nav, .mobile-menu") || container;
+  const existing = scope.querySelector('a[href="perfil.html"], a[href="./perfil.html"]');
+  if (existing) return null;
+
+  const link = document.createElement("a");
+  link.href = "./perfil.html";
+  link.className = className;
+  link.textContent = "Perfil";
+  return link;
+}
+
 function renderMobileAuth() {
   const container = document.getElementById("mobile-nav-auth");
   if (!container) return;
@@ -158,33 +163,19 @@ function renderMobileAuth() {
   if (session?.email) {
     const displayName = getLocalProfileName() || session.name || session.email;
     const wrap = document.createElement("div");
-    wrap.className = "nav-auth-logged";
-    wrap.style.flexDirection = "column";
-    wrap.style.alignItems = "flex-start";
-    wrap.style.gap = "0.5rem";
+    wrap.className = "nav-auth-logged mobile-nav-auth-logged";
     
     const span = document.createElement("span");
     span.className = "nav-user-email";
     span.textContent = displayName;
-    span.style.fontSize = "0.875rem";
-    
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "btn btn-ghost";
-    btn.textContent = "Sair";
-    btn.addEventListener("click", async () => {
-      await logout();
-      window.location.reload();
-    });
     
     wrap.appendChild(span);
-    wrap.appendChild(btn);
+    const profileLink = createProfileLink(container);
+    if (profileLink) wrap.appendChild(profileLink);
     container.appendChild(wrap);
   } else {
     const guestWrap = document.createElement("div");
-    guestWrap.className = "nav-auth-guest";
-    guestWrap.style.flexDirection = "column";
-    guestWrap.style.gap = "0.5rem";
+    guestWrap.className = "nav-auth-guest mobile-nav-auth-guest";
     
     const aSignup = document.createElement("a");
     aSignup.href = "signup.html";

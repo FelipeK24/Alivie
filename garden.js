@@ -24,6 +24,12 @@ function getElements() {
   };
 }
 
+function escapeHtml(value) {
+  const element = document.createElement('span');
+  element.textContent = value == null ? '' : String(value);
+  return element.innerHTML;
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', async () => {
   const els = getElements();
@@ -265,9 +271,9 @@ function renderHistory() {
       <div class="history-item">
         <div class="history-icon">${categoryEmojis[h.category] || '🌸'}</div>
         <div class="history-info">
-          <h4>${h.practiceName}</h4>
+          <h4>${escapeHtml(h.practiceName)}</h4>
           <span class="history-date">${dateStr}</span>
-          ${h.note ? `<p class="history-note">"${h.note}"</p>` : ''}
+          ${h.note ? `<p class="history-note">"${escapeHtml(h.note)}"</p>` : ''}
         </div>
         <div class="history-mood">${mood}</div>
       </div>

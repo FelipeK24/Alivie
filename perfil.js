@@ -3,13 +3,10 @@ import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.11.0/
 
 // Simplified Profile - Only name and theme
 document.addEventListener('DOMContentLoaded', async () => {
-  if (window.Auth?.fetchSession) {
-    await window.Auth.fetchSession();
-  }
-
   const displayNameInput = document.getElementById('display-name');
   const profileNameSpan = document.getElementById('profile-name');
   const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleLabel = document.getElementById('theme-toggle-label');
   const saveButton = document.getElementById('btn-save');
   const logoutButton = document.getElementById('btn-logout');
   
@@ -23,6 +20,36 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (displayNameInput) {
     displayNameInput.addEventListener('input', updateProfileName);
   }
+
+  const applyTheme = (isDark) => {
+    if (isDark) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    themeToggle?.setAttribute('aria-pressed', String(isDark));
+    if (themeToggleLabel) {
+      themeToggleLabel.textContent = isDark ? 'Usar tema claro' : 'Ativar tema escuro';
+    }
+    const icon = themeToggle?.querySelector('i');
+    if (icon) {
+      icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    }
+  };
+
+  if (themeToggle) {
+    applyTheme(localStorage.getItem('theme') === 'dark');
+    themeToggle.addEventListener('click', () => {
+      applyTheme(themeToggle.getAttribute('aria-pressed') !== 'true');
+    });
+  }
+
+  if (window.Auth?.fetchSession) {
+    await window.Auth.fetchSession();
+  }
+  const currentSession = window.Auth?.getSession ? window.Auth.getSession() : null;
+  if (logoutButton && !currentSession?.uid) logoutButton.hidden = true;
   
   // Load user data
   const loadUserData = async () => {
@@ -58,10 +85,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       e.preventDefault();
       
       const name = displayNameInput?.value.trim() || '';
-      const theme = themeToggle?.checked ? 'dark' : 'light';
-      
-      // Save theme locally
-      localStorage.setItem('theme', theme);
       if (name) localStorage.setItem('alivie_profile', JSON.stringify({ name }));
       
       const session = window.Auth?.getSession ? window.Auth.getSession() : null;
@@ -87,26 +110,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   // Logout
   if (logoutButton) {
-    logoutButton.addEventListener('click', () => {
+    logoutButton.addEventListener('click', async () => {
       if (window.Auth?.logout) {
-        window.Auth.logout();
-      }
-    });
-  }
-  
-  // Theme toggle
-  if (themeToggle) {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      themeToggle.checked = true;
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
-    
-    themeToggle.addEventListener('change', () => {
-      if (themeToggle.checked) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      } else {
-        document.documentElement.removeAttribute('data-theme');
+        await window.Auth.logout();
+        window.location.href = './landing.html';
       }
     });
   }

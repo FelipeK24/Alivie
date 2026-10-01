@@ -15,18 +15,18 @@
 
 const path = require("path");
 const fs = require("fs");
+const crypto = require("crypto");
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET =
-  process.env.JWT_SECRET || (() => {
-    console.warn('⚠️  WARNING: JWT_SECRET not set. Using weak default for development only.');
-    console.warn('⚠️  In production, set JWT_SECRET environment variable to a strong random string.');
-    return "altere-isso-em-producao-use-uma-string-longa-e-aleatoria";
-  })();
+const configuredJwtSecret = process.env.JWT_SECRET;
+if (process.env.NODE_ENV === "production" && (!configuredJwtSecret || configuredJwtSecret.length < 32)) {
+  throw new Error("JWT_SECRET must contain at least 32 characters in production.");
+}
+const JWT_SECRET = configuredJwtSecret || crypto.randomBytes(32).toString("hex");
 const JWT_COOKIE = "token";
 const COOKIE_OPTIONS = {
   httpOnly: true,

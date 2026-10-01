@@ -54,7 +54,7 @@ async function initApp() {
   const session = window.Auth?.getSession ? window.Auth.getSession() : null;
   
   // If user is logged in and on index page, redirect to dashboard
-  if (session?.uid && (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('Alivie/'))) {
+  if (session?.uid && (window.location.pathname.includes('index.html') || window.location.pathname.includes('landing.html') || window.location.pathname === '/' || window.location.pathname.endsWith('Alivie/'))) {
     window.location.href = './minha-rotina.html';
     return;
   }
@@ -63,7 +63,7 @@ async function initApp() {
     App.user = {
       uid: session.uid,
       email: session.email,
-      name: session.displayName || session.email.split('@')[0]
+      name: session.name || session.email.split('@')[0]
     };
     
     // Load user data
@@ -142,18 +142,7 @@ function saveGuestData() {
 function updateAuthUI() {
   const navAuth = document.getElementById('nav-auth');
   if (!navAuth) return;
-  
-  if (App.user) {
-    navAuth.innerHTML = `
-      <span class="user-name">${App.user.name}</span>
-      <a href="./perfil.html" class="btn btn-ghost btn-small">Perfil</a>
-    `;
-  } else {
-    navAuth.innerHTML = `
-      <a href="./login.html" class="btn btn-ghost btn-small">Entrar</a>
-      <a href="./signup.html" class="btn btn-primary btn-small">Criar conta</a>
-    `;
-  }
+  if (window.Auth?.renderHeader) window.Auth.renderHeader(navAuth);
 }
 
 function updateLandingButtons() {

@@ -1,60 +1,74 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Funções Auxiliares
     function isAuthenticated() {
       return request.auth != null;
     }
-    
+
     function isOwner(userId) {
       return isAuthenticated() && request.auth.uid == userId;
     }
-    
-    // Garante que TODOS os campos obrigatórios existem e NENHUM campo estranho foi enviado
-    function isValidProfileData() {
-      return request.resource.data.keys().hasAll(['fullName', 'username', 'email', 'routineFocus'])
-        && request.resource.data.keys().hasOnly(['fullName', 'username', 'email', 'routineFocus', 'theme']);
-    }
-    
-    // Garante que o formulário só contém chaves permitidas da lista
-    function isValidFormularioData() {
+
+    function isValidUserData() {
       return request.resource.data.keys().hasOnly([
-        'rotina_diaria', 'horas_sono', 'carga_trabalho', 'estresse', 
-        'equilibrio', 'atividades_fisicas', 'bem_estar_mental', 'objetivos'
+        'name', 'createdAt', 'garden', 'streakDays', 'longestStreak',
+        'lastPracticeDate', 'history', 'fullName', 'username', 'email',
+        'routineFocus', 'theme'
       ]);
     }
 
-    // Coleção Profiles - usuários só leem/escrevem seu próprio perfil
+    function isValidProfileData() {
+      return request.resource.data.keys().hasOnly([
+        'fullName', 'username', 'email', 'routineFocus', 'theme', 'name'
+      ]);
+    }
+
+    function isValidFormularioData() {
+      return request.resource.data.keys().hasOnly([
+        'rotina_diaria', 'horas_sono', 'carga_trabalho', 'foco_melhorar',
+        'cuidados_mente', 'observacoes', 'promptCondensado', 'atualizadoEm',
+        'estresse', 'equilibrio', 'atividades_fisicas', 'bem_estar_mental',
+        'objetivos'
+      ]);
+    }
+
+    // User-owned app data is stored in users/{uid} by app.js and perfil.js.
+    match /users/{userId} {
+      allow read, delete: if isOwner(userId);
+      allow create, update: if isOwner(userId) && isValidUserData();
+    }
+
+    // Profile and form documents are read by minha-rotina.js.
     match /profiles/{userId} {
       allow read, delete: if isOwner(userId);
       allow create, update: if isOwner(userId) && isValidProfileData();
     }
 
-    // Coleção Formularios
+    match /forms/{userId} {
+      allow read, delete: if isOwner(userId);
+      allow create, update: if isOwner(userId) && isValidFormularioData();
+    }
+
+    // Legacy collection retained for existing formulario documents.
     match /formularios/{userId} {
       allow read, delete: if isOwner(userId);
       allow create, update: if isOwner(userId) && isValidFormularioData();
     }
 
-    // Progresso/Status do usuário (Gamificação)
     match /userStats/{userId} {
       allow read, write: if isOwner(userId);
     }
 
-    // Conquistas/Badges Globais - apenas leitura para usuários logados
     match /achievements/{achievementId} {
       allow read: if isAuthenticated();
-      allow write: if false; // Apenas admin via painel/backend
+      allow write: if false;
     }
 
-    // Conquistas do Usuário 
     match /userAchievements/{userId} {
       allow read: if isOwner(userId);
-      // Mude para 'if isOwner(userId)' caso o seu JS do front-end precise liberar as medalhas:
-      allow write: if false; 
+      allow write: if false;
     }
 
-    // Bloqueia qualquer outra coleção não listada acima
     match /{document=**} {
       allow read, write: if false;
     }

@@ -13,31 +13,31 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/f
       { id: 'm2', title: 'Hidratação matinal', duration: '2 min', type: 'saude', energy: 'low', icon: 'fa-glass-water', description: 'Beba um copo de água para acordar o corpo.' },
       { id: 'm3', title: 'Respiração consciente', duration: '3 min', type: 'mental', energy: 'low', icon: 'fa-wind', description: 'Respire fundo por alguns ciclos para começar o dia com presença.' },
       { id: 'm4', title: 'Café da manhã tranquilo', duration: '15 min', type: 'saude', energy: 'low', icon: 'fa-mug-hot', description: 'Coma sem pressa, com atenção ao momento.' },
-      { id: 'm5', title: 'Pausa para café', duration: '10 min', type: 'pausa', energy: 'low', icon: 'fa-coffee', description: 'Um momento de calma antes de iniciar as tarefas.' },
-      { id: 'm6', title: 'Caminhada leve', duration: '15 min', type: 'movimento', energy: 'medium', icon: 'fa-walking', description: 'Uma volta curta para ativar o corpo.' },
+      { id: 'm5', title: 'Pausa para café', duration: '10 min', type: 'pausa', energy: 'low', icon: 'fa-mug-hot', description: 'Um momento de calma antes de iniciar as tarefas.' },
+      { id: 'm6', title: 'Caminhada leve', duration: '15 min', type: 'movimento', energy: 'medium', icon: 'fa-person-walking', description: 'Uma volta curta para ativar o corpo.' },
       { id: 'm7', title: 'Yoga matinal', duration: '10 min', type: 'movimento', energy: 'medium', icon: 'fa-spa', description: 'Posturas simples para acordar com leveza.' },
       { id: 'm8', title: 'Meditação guiada', duration: '10 min', type: 'mental', energy: 'medium', icon: 'fa-om', description: 'Um momento de silêncio para organizar a mente.' },
       { id: 'm9', title: 'Preparação organizada', duration: '10 min', type: 'disciplina', energy: 'medium', icon: 'fa-clipboard-check', description: 'Defina a ordem do dia antes de começar.' },
-      { id: 'm10', title: 'Exercício rápido', duration: '20 min', type: 'movimento', energy: 'high', icon: 'fa-running', description: 'Movimentos curtos para elevar a disposição.' },
+      { id: 'm10', title: 'Exercício rápido', duration: '20 min', type: 'movimento', energy: 'high', icon: 'fa-person-running', description: 'Movimentos curtos para elevar a disposição.' },
       { id: 'm11', title: 'Planejamento do dia', duration: '10 min', type: 'disciplina', energy: 'high', icon: 'fa-list-check', description: 'Escolha as 3 prioridades principais do dia.' },
       { id: 'm12', title: 'Exposição ao sol', duration: '10 min', type: 'saude', energy: 'medium', icon: 'fa-sun', description: 'Luz natural ajuda o corpo a despertar.' }
     ],
     tarde: [
       { id: 't1', title: 'Pausa para água', duration: '2 min', type: 'saude', energy: 'low', icon: 'fa-glass-water', description: 'Mais um copo de água para manter o ritmo.' },
       { id: 't2', title: 'Respiração no trabalho', duration: '3 min', type: 'mental', energy: 'low', icon: 'fa-wind', description: 'Desconecte por alguns instantes e respire fundo.' },
-      { id: 't3', title: 'Pausa para o lanche', duration: '10 min', type: 'saude', energy: 'low', icon: 'fa-apple-alt', description: 'Escolha algo leve para manter o foco.' },
+      { id: 't3', title: 'Pausa para o lanche', duration: '10 min', type: 'saude', energy: 'low', icon: 'fa-apple-whole', description: 'Escolha algo leve para manter o foco.' },
       { id: 't4', title: 'Alongamento na cadeira', duration: '5 min', type: 'movimento', energy: 'low', icon: 'fa-chair', description: 'Solte ombros, pescoço e mãos.' },
       { id: 't5', title: 'Pausa visual', duration: '5 min', type: 'saude', energy: 'low', icon: 'fa-eye', description: 'Olhe para longe por alguns segundos.' },
-      { id: 't6', title: 'Caminhada no almoço', duration: '15 min', type: 'movimento', energy: 'medium', icon: 'fa-walking', description: 'Uma volta curta ajuda a reduzir a fadiga.' },
+      { id: 't6', title: 'Caminhada no almoço', duration: '15 min', type: 'movimento', energy: 'medium', icon: 'fa-person-walking', description: 'Uma volta curta ajuda a reduzir a fadiga.' },
       { id: 't7', title: 'Meditação de meio-dia', duration: '10 min', type: 'mental', energy: 'medium', icon: 'fa-om', description: 'Momento breve para recarregar a atenção.' },
-      { id: 't8', title: 'Organização da tarde', duration: '5 min', type: 'disciplina', energy: 'medium', icon: 'fa-tasks', description: 'Revise o que falta e reordene prioridades.' },
+      { id: 't8', title: 'Organização da tarde', duration: '5 min', type: 'disciplina', energy: 'medium', icon: 'fa-list-check', description: 'Revise o que falta e reordene prioridades.' },
       { id: 't9', title: 'Lanche saudável', duration: '10 min', type: 'saude', energy: 'medium', icon: 'fa-carrot', description: 'Alimente-se de forma equilibrada.' },
       { id: 't10', title: 'Exercício ao ar livre', duration: '20 min', type: 'movimento', energy: 'high', icon: 'fa-bicycle', description: 'Aproveite a tarde para se movimentar mais.' },
       { id: 't11', title: 'Revisão de metas', duration: '10 min', type: 'disciplina', energy: 'high', icon: 'fa-bullseye', description: 'Veja o que já avançou e o que ainda falta.' },
       { id: 't12', title: 'Pausa de recuperação', duration: '8 min', type: 'pausa', energy: 'low', icon: 'fa-umbrella-beach', description: 'Descanse sem culpa por alguns minutos.' }
     ],
     noite: [
-      { id: 'n1', title: 'Redução de telas', duration: 'Ongoing', type: 'sono', energy: 'low', icon: 'fa-mobile-alt', description: 'Diminuir telas ajuda o corpo a desacelerar.' },
+      { id: 'n1', title: 'Redução de telas', duration: 'Ongoing', type: 'sono', energy: 'low', icon: 'fa-mobile-screen-button', description: 'Diminuir telas ajuda o corpo a desacelerar.' },
       { id: 'n2', title: 'Jantar leve', duration: '30 min', type: 'saude', energy: 'low', icon: 'fa-utensils', description: 'Uma refeição leve favorece o descanso.' },
       { id: 'n3', title: 'Chá relaxante', duration: '10 min', type: 'saude', energy: 'low', icon: 'fa-mug-hot', description: 'Escolha algo suave, como camomila ou cidreira.' },
       { id: 'n4', title: 'Leitura tranquila', duration: '15 min', type: 'mental', energy: 'low', icon: 'fa-book', description: 'Leia algo leve para desacelerar a mente.' },
@@ -184,10 +184,20 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/f
       return Promise.resolve({ ok: false });
     }
     try {
-      const docRef = doc(db, "profiles", session.uid);
+      const docRef = doc(db, "users", session.uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        return { ok: true, body: { profile: docSnap.data() } };
+        const data = docSnap.data();
+        return {
+          ok: true,
+          body: {
+            profile: {
+              ...data,
+              fullName: data.fullName || data.name || '',
+              routineFocus: data.routineFocus || 'relaxamento'
+            }
+          }
+        };
       }
       return { ok: false };
     } catch (err) {
@@ -448,7 +458,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/f
     return (
       '<div class="rotina-card" data-activity-id="' + escapeHtml(activity.id) + '">' +
         '<div class="rotina-card__icon">' +
-          '<i class="fas ' + escapeHtml(activity.icon) + '"></i>' +
+          '<i class="fa-solid ' + escapeHtml(activity.icon) + '" aria-hidden="true"></i>' +
         '</div>' +
         '<div class="rotina-card__content">' +
           '<h4 class="rotina-card__title">' + escapeHtml(activity.title) + '</h4>' +
@@ -758,7 +768,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/f
       return `
         <div class="task-card ${isCompleted ? 'completed' : ''}" data-activity-id="${activity.id}">
           <div class="task-icon">
-            <i class="fas ${activity.icon}"></i>
+            <i class="fa-solid ${activity.icon}" aria-hidden="true"></i>
           </div>
           <div class="task-content">
             <h3 class="task-title">${activity.title}</h3>

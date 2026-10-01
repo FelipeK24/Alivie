@@ -1,10 +1,8 @@
-// Theme initialization - runs before page render to avoid flash
-document.addEventListener("DOMContentLoaded", () => {
-  const savedTheme = localStorage.getItem('theme');
-
-  if (savedTheme === 'dark') {
+// Runs from the document head so the saved theme is applied before the page paints.
+try {
+  if (localStorage.getItem('theme') === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
-  } else {
-    document.documentElement.removeAttribute('data-theme');
   }
-});
+} catch (error) {
+  // Keep the default light theme if storage is disabled.
+}
