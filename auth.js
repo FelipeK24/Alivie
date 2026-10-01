@@ -5,9 +5,10 @@ import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase
 let sessionCache = null;
 let sessionPromise = null;
 
-function getLocalProfileName() {
+function getLocalProfileName(uid) {
   try {
-    const saved = localStorage.getItem('alivie_profile');
+    if (!uid) return null;
+    const saved = localStorage.getItem(`alivie_profile_${uid}`);
     if (!saved) return null;
     const data = JSON.parse(saved);
     return data?.name ? String(data.name).trim() : null;
@@ -17,7 +18,7 @@ function getLocalProfileName() {
 }
 
 async function getStoredProfileName(uid) {
-  const localName = getLocalProfileName();
+  const localName = getLocalProfileName(uid);
   if (localName) return localName;
 
   if (!uid) return null;
@@ -41,6 +42,21 @@ async function getStoredProfileName(uid) {
   return null;
 }
 
+async function applyStoredTheme(uid) {
+  try {
+    let theme = localStorage.getItem(`alivie_theme_${uid}`);
+    if (!theme) {
+      const snapshot = await getDoc(doc(db, 'users', uid));
+      theme = snapshot.exists() ? snapshot.data()?.theme : null;
+      if (theme) localStorage.setItem(`alivie_theme_${uid}`, theme);
+    }
+    if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    else document.documentElement.removeAttribute('data-theme');
+  } catch (err) {
+    console.warn('Could not load user theme:', err.message);
+  }
+}
+
 async function fetchSession() {
   if (sessionPromise) {
     return sessionPromise;
@@ -58,6 +74,7 @@ async function fetchSession() {
       });
 
       if (user?.email) {
+        localStorage.setItem('alivie_active_uid', user.uid);
         const fallbackName = user.displayName || user.email.split('@')[0];
         sessionCache = {
           email: user.email,
@@ -73,7 +90,9 @@ async function fetchSession() {
           console.warn('Could not load profile name, using fallback:', err);
           // Continue with fallback name
         }
+        await applyStoredTheme(user.uid);
       } else {
+        localStorage.removeItem('alivie_active_uid');
         sessionCache = null;
       }
 
@@ -81,6 +100,7 @@ async function fetchSession() {
     } catch (error) {
       console.error('Auth state error:', error);
       sessionCache = null;
+      document.documentElement.removeAttribute('data-theme');
       return null;
     }
   })();
@@ -96,6 +116,7 @@ async function logout() {
     await signOut(auth);
     sessionCache = null;
     sessionPromise = null;
+    localStorage.removeItem('alivie_active_uid');
     if (window.Toast) {
       window.Toast.success('Você saiu da sua conta.');
     }
@@ -104,6 +125,7 @@ async function logout() {
     // Still clear session even if logout fails
     sessionCache = null;
     sessionPromise = null;
+    localStorage.removeItem('alivie_active_uid');
     if (window.Toast) {
       window.Toast.error('Erro ao sair. Por favor, recarregue a página.');
     }
@@ -115,7 +137,7 @@ function renderHeader(container) {
   const session = getSession();
   container.innerHTML = "";
   if (session?.email) {
-    const displayName = getLocalProfileName() || session.name || session.email;
+    const displayName = getLocalProfileName(session.uid) || session.name || session.email;
     const wrap = document.createElement("div");
     wrap.className = "nav-auth-logged";
     const span = document.createElement("span");
@@ -161,7 +183,7 @@ function renderMobileAuth() {
   const session = getSession();
   container.innerHTML = "";
   if (session?.email) {
-    const displayName = getLocalProfileName() || session.name || session.email;
+    const displayName = getLocalProfileName(session.uid) || session.name || session.email;
     const wrap = document.createElement("div");
     wrap.className = "nav-auth-logged mobile-nav-auth-logged";
     
@@ -286,6 +308,7 @@ function initLoginPage() {
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email?.value || "", password?.value || "");
+      localStorage.setItem('alivie_active_uid', userCredential.user.uid);
       sessionCache = { email: userCredential.user.email, uid: userCredential.user.uid };
       if (window.Toast) {
         window.Toast.success('Login realizado com sucesso!');
@@ -347,6 +370,7 @@ function initSignupPage() {
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email?.value || "", password?.value || "");
+      localStorage.setItem('alivie_active_uid', userCredential.user.uid);
       sessionCache = { email: userCredential.user.email, uid: userCredential.user.uid };
       if (window.Toast) {
         window.Toast.success('Conta criada com sucesso! Redirecionando...');

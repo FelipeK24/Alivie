@@ -3009,6 +3009,15 @@ body.practice-page.playing header.site-header {
 .step-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
+  color: #2C5282;
+}
+
+.step-icon .fa-solid {
+  color: inherit;
+}
+
+[data-theme="dark"] .step-icon {
+  color: #60A5FA;
 }
 
 .step h3 {
@@ -4176,20 +4185,13 @@ body.practice-page.playing header.site-header {
 
 /* Landing Page Styles */
 .hero-landing {
-  /* position: relative;
-  padding-block: 6rem;
-  padding-left: 4rem;
-  padding-right: 2rem;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 3rem; */
-  display: grid;
-  grid-template-columns: 1fr auto;
+  margin: 4rem 0 2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   text-align: center;
-  justify-content: center;
-  padding-left: 35%;
+  gap: 3rem;
 }
 
 .hero-content {
@@ -4197,7 +4199,7 @@ body.practice-page.playing header.site-header {
 }
 
 .hero-decoration {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 2rem;
   font-size: 4rem;

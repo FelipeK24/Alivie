@@ -27,7 +27,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
       document.documentElement.removeAttribute('data-theme');
     }
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    const session = window.Auth?.getSession ? window.Auth.getSession() : null;
+    const theme = isDark ? 'dark' : 'light';
+    localStorage.setItem(session?.uid ? `alivie_theme_${session.uid}` : 'alivie_theme_guest', theme);
     themeToggle?.setAttribute('aria-pressed', String(isDark));
     if (themeToggleLabel) {
       themeToggleLabel.textContent = isDark ? 'Usar tema claro' : 'Ativar tema escuro';
@@ -38,25 +40,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   };
 
-  if (themeToggle) {
-    applyTheme(localStorage.getItem('theme') === 'dark');
-    themeToggle.addEventListener('click', () => {
-      applyTheme(themeToggle.getAttribute('aria-pressed') !== 'true');
-    });
-  }
-
   if (window.Auth?.fetchSession) {
     await window.Auth.fetchSession();
   }
   const currentSession = window.Auth?.getSession ? window.Auth.getSession() : null;
   if (logoutButton && !currentSession?.uid) logoutButton.hidden = true;
+  if (currentSession?.uid) localStorage.setItem('alivie_active_uid', currentSession.uid);
   
   // Load user data
   const loadUserData = async () => {
     const session = window.Auth?.getSession ? window.Auth.getSession() : null;
     if (!session?.uid) {
       // Load from localStorage for guests
-      const saved = localStorage.getItem('alivie_profile');
+      const saved = localStorage.getItem('alivie_profile_guest');
       if (saved) {
         const data = JSON.parse(saved);
         if (displayNameInput && data.name) displayNameInput.value = data.name;
@@ -71,13 +67,33 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (docSnap.exists()) {
         const data = docSnap.data();
         if (displayNameInput && data.name) displayNameInput.value = data.name;
+        const savedTheme = localStorage.getItem(`alivie_theme_${session.uid}`) || data.theme || 'light';
+        applyTheme(savedTheme === 'dark');
+      } else {
+        applyTheme(localStorage.getItem(`alivie_theme_${session.uid}`) === 'dark');
       }
     } catch (err) {
       console.error('Error loading user:', err);
     }
 
+    if (!session?.uid) applyTheme(localStorage.getItem('alivie_theme_guest') === 'dark');
     updateProfileName();
   };
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', async () => {
+      const isDark = themeToggle.getAttribute('aria-pressed') !== 'true';
+      applyTheme(isDark);
+      const session = window.Auth?.getSession ? window.Auth.getSession() : null;
+      if (session?.uid) {
+        try {
+          await setDoc(doc(db, 'users', session.uid), { theme: isDark ? 'dark' : 'light' }, { merge: true });
+        } catch (err) {
+          console.error('Error saving theme:', err);
+        }
+      }
+    });
+  }
   
   // Save
   if (saveButton) {
@@ -85,9 +101,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       e.preventDefault();
       
       const name = displayNameInput?.value.trim() || '';
-      if (name) localStorage.setItem('alivie_profile', JSON.stringify({ name }));
-      
       const session = window.Auth?.getSession ? window.Auth.getSession() : null;
+      if (name) localStorage.setItem(session?.uid ? `alivie_profile_${session.uid}` : 'alivie_profile_guest', JSON.stringify({ name }));
       if (session?.uid) {
         try {
           const docRef = doc(db, "users", session.uid);
